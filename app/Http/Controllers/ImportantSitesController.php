@@ -66,7 +66,7 @@ class ImportantSitesController extends Controller
     {
         $validateErrors = Validator::make($request->all(),
             [
-                'name' => 'required|string|min:3|max:200',
+                'name' => 'unique:important_websites,name|required|string|min:3|max:200',
                 'type' => 'required',
                 'link' => 'required|string',
 

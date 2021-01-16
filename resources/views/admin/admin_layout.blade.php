@@ -119,7 +119,7 @@
 
                     <li class="has-sub nav-item"><a href="javascript:;"><i class="ft ft-award"></i><span class="menu-title" data-i18n="UI Kit">  الامتحانات </span><span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a>
                         <ul class="menu-content">
-                            <li><a href="{{url('/import_marks')}}"><i class="fa fa-inbox"></i><span class="menu-item" data-i18n="Typography"> علامات الطلاب </span>  </a><span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></li>
+                            <li><a href="{{url('/marks')}}"><i class="fa fa-inbox"></i><span class="menu-item" data-i18n="Typography"> علامات الطلاب </span>  </a><span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></li>
 
                         </ul>
                     </li>

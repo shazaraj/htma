@@ -15,6 +15,8 @@ class CreateStudyYearsTable extends Migration
     {
         Schema::create('study_years', function (Blueprint $table) {
             $table->id();
+            $table->integer('study_year_id');
+            $table->string('name');
             $table->timestamps();
         });
     }

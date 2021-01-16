@@ -9,13 +9,41 @@
                     <div class="card-content">
                         <div class="card-body">
                             <p>
-                                الرئيسية/ استيراد وعرض قوائم الطلاب
+                                الرئيسية/ بيانات الطلاب
                             </p>
                             <div class="row">
-                                <button type="button" id="createNewProduct"
-                                        data-toggle="modal" data-target="#advertModal" class="btn gradient-purple-bliss">إضافة</button>
 
+                                @if(count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        error <br>
+                                        <ul>
+                                            @foreach($errors->all() as $error)
+                                                <li> {{ $error }} </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if($message = Session::get('success'))
+                                    <div class="alert alert-success alert">
+                                        <button type="button" class="close" data-dismiss="alert"> X </button>
+                                        <strong> {{ $message }} </strong>
+                                    </div>
+
+                                @endif
+
+                                <form method="post" enctype="multipart/form-data" action="{{route('students.import')}}">
+
+                                    {{ csrf_field() }}
+                                    <input type="file" name="select_file" class="btn gradient-purple-bliss" style="margin: 5px"> </input>
+                                    <input type="submit" name="upload" class="btn gradient-purple-bliss" value="تحميل الملف" style="padding:10px; margin: 5px"> </input>
+
+                                </form>
+
+                                <button type="button" id="createNew"
+                                        data-toggle="modal" data-target="#advertModal" class="btn gradient-purple-bliss" style="margin: 5px">إضافة</button>
                             </div>
+
 
                             <div class="row">
 
@@ -26,13 +54,14 @@
 
 
                                         <tr>
-                                            <th> #</th>
-                                            <th>  عنوان الخبر    </th>
-                                            <th> التفاصيل  </th>
-                                            <th> الصورة   </th>
-                                            <th> المراسل   </th>
+                                            <th width="10%"> #</th>
+                                            <th width="10%">الرقم الجامعي</th>
+                                            <th width="10%"> اسم الطالب </th>
+                                            <th width="10%"> الرقم الوطني </th>
+                                            <th width="10%"> رقم الهاتف </th>
 
-                                            <th width="15%">العمليات</th>
+                                            <th width="10%" >العمليات</th>
+
                                         </tr>
 
                                         </thead>
@@ -54,31 +83,44 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <label class="modal-title text-text-bold-600" id="modelheading">تعديل بيانات الخبر </label>
+                    <label class="modal-title text-text-bold-600" id="modelheading">تعديل بيانات  </label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
 
                     </button>
                 </div>
                 <form method="post" id="productForm" enctype="multipart/form-data">
-
                     <input type="hidden" name="_id" id="_id">
                     <div class="modal-body">
+                        <div class="row">
+                            @csrf
 
-                        <label> عنوان الخبر   </label>
-                        <input type="text" name="name" id="name" class="form-control"/>
+                            <div class="col-md-6"> <label> الرقم الجامعي </label>
+                                <div class="form-group">
+                                    <input type="number" name="univ_id" id="univ_id" placeholder="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> <label> اسم الطالب </label>
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name" placeholder="" class="form-control">
+                                </div>
+                            </div>
 
-                        <br/> <label> التفاصيل  </label>
-                        <input type="text" name="details" id="details" class="form-control">
+                        </div>
 
-                        <br/>
-                        <label for="roundText">   صورة     </label>
-                        <div class="needsclick dropzone" id="image" name="image"> </div>
+                        <div class="row">
+                            <div class="col-md-6"> <label> الرقم الوطني </label>
+                                <div class="form-group">
+                                    <input type="text" name="national_id" id="national_id" placeholder="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6"> <label> رقم الهاتف </label>
+                                <div class="form-group">
+                                    <input type="text" name="mobile" id="mobile" placeholder="" class="form-control">
+                                </div>
+                            </div>
 
-                        <br/>
-                        <label> المراسل  </label>
-                        <input type="text" name="morasel_id" id="morasel_id" class="form-control">
-
+                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -98,103 +140,194 @@
 @push('pageJs')
 
 
-    {{--<script type="text/javascript">--}}
+    <script type="text/javascript">
 
-        {{--$(function () {--}}
-
-
-            {{--$.ajaxSetup({--}}
-
-                {{--headers: {--}}
-
-                    {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-
-                {{--}--}}
-
-            {{--});--}}
+        $(function () {
 
 
-            {{--var table = $('#tableData').DataTable({--}}
-                {{--"language": {--}}
-                    {{--"processing": " جاري المعالجة",--}}
-                    {{--"paginate": {--}}
-                        {{--"first": "الأولى",--}}
-                        {{--"last": "الأخيرة",--}}
-                        {{--"next": "التالية",--}}
-                        {{--"previous": "السابقة"--}}
-                    {{--},--}}
-                    {{--"search": "البحث :",--}}
-                    {{--"loadingRecords": "جاري التحميل...",--}}
-                    {{--"emptyTable": " لا توجد بيانات",--}}
-                    {{--"info": "من إظهار _START_ إلى _END_ من _TOTAL_ النتائج",--}}
-                    {{--"infoEmpty": "Showing 0 إلى 0 من 0 entries",--}}
-                    {{--"lengthMenu": "إظهار _MENU_ البيانات",--}}
-                {{--},--}}
-                {{--processing: true,--}}
+            $.ajaxSetup({
 
-                {{--serverSide: true,--}}
+                headers: {
 
-                {{--ajax: "{{ route('morasel_news_requests')}}",--}}
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
-                {{--columns: [--}}
+                }
 
-                    {{--{data: 'DT_RowIndex', name: 'DT_RowIndex'},--}}
-
-                    {{--{data: 'title', name: 'title'},--}}
-                    {{--{data: 'details', name: 'details'},--}}
-                    {{--{data: 'image', name: 'image'},--}}
-                    {{--{data: 'morasel_id', name: 'morasel_id'},--}}
-
-                    {{--{data: 'action', name: 'action', orderable: false, searchable: false},--}}
-
-                {{--]--}}
-
-            {{--});--}}
+            });
 
 
+            var table = $('#tableData').DataTable({
+                "language": {
+                    "processing": " جاري المعالجة",
+                    "paginate": {
+                        "first": "الأولى",
+                        "last": "الأخيرة",
+                        "next": "التالية",
+                        "previous": "السابقة"
+                    },
+                    "search": "البحث :",
+                    "loadingRecords": "جاري التحميل...",
+                    "emptyTable": " لا توجد بيانات",
+                    "info": "من إظهار _START_ إلى _END_ من _TOTAL_ النتائج",
+                    "infoEmpty": "Showing 0 إلى 0 من 0 entries",
+                    "lengthMenu": "إظهار _MENU_ البيانات",
+                },
+                destroy:true,
+                processing: true,
 
-            {{--$('body').on('click', '.accept', function () {--}}
+                serverSide: true,
+                stateSave:true,
+
+                ajax: "{{ route('students.index')}}",
+
+                columns: [
+
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+
+                    {data: 'univ_id', name: 'univ_id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'national_id', name: 'national_id'},
+                    {data: 'mobile', name: 'mobile'},
+
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+
+                ]
+
+            });
 
 
-                {{--var product_id = $(this).data("id");--}}
 
-                {{--var co = confirm("  هل أنت متأكد من قبول الخبر  !");--}}
-                {{--if (!co) {--}}
-                    {{--return;--}}
-                {{--}--}}
+            $('#createNew').click(function () {
+
+                $('#action').val("إضافة");
+
+                $('#_id').val('');
+
+                $('#productForm').trigger("reset");
+
+                $('#modelheading').html("  إضافة بيانات ");
 
 
-                {{--$.ajax({--}}
-
-                    {{--type: "POST",--}}
-
-                    {{--url: "{{ route('new.agree') }}/" + product_id  ,--}}
-                    {{--// data:{--}}
-                    {{--//     "_id":product_id,--}}
-                    {{--//     "status":1,--}}
-                    {{--//     "_token":$("input[name=_token]").val()--}}
-                    {{--// },--}}
-
-                    {{--success: function (data) {--}}
-
-                        {{--table.draw();--}}
-
-                    {{--},--}}
-
-                    {{--error: function (data) {--}}
-
-                        {{--console.log('خطأ:', data);--}}
-
-                    {{--}--}}
-
-                {{--});--}}
-
-            {{--});--}}
+            });
 
 
 
 
-        {{--});--}}
+            $('body').on('click', '.deleteStudent', function () {
 
-    {{--</script>--}}
+                var item = $(this);
+                var product_id = $(this).data("id");
+
+                item.html("<i class='fa fa-spinner'> </i>");
+
+                var co = confirm("  هل أنت متأكد من الحذف  !");
+                if (!co) {
+                    item.html("<i class='fa fa-trash'> </i>");
+                    return;
+                }
+
+                $.ajax({
+
+                    type: "DELETE",
+
+                    url: "{{ route('students.store') }}" + '/' + product_id,
+
+                    success: function (data) {
+                        item.html("<i class='fa fa-trash'> </i>");
+                        toastr.error("تم الحذف بنجاح");
+                        table.draw(false);
+
+                    },
+
+                    error: function (data) {
+                        item.html("<i class='fa fa-trash'> </i>");
+                        toastr.error("حدث خطأ ");
+                        console.log('خطأ:', data);
+
+                    }
+
+                });
+
+            });
+
+            $('body').on('click', '.editStudent', function () {
+
+                var item = $(this);
+                var product_id = $(this).data('id');
+                item.html("<i class='fa fa-spinner'> </i>");
+
+                $.get("{{ route('students.index') }}" + '/' + product_id + '/edit', function (data) {
+
+                    item.html("<i class='fa fa-edit'> </i>");
+                    $('#modelheading').html("تعديل البيانات ");
+
+                    $("#action").html("تعديل");
+                    $("#action").val("تعديل");
+                    $('#advertModal').modal('show');
+
+                    $('#_id').val(data.id);
+
+                    $('#name').val(data.name);
+                    $('#univ_id').val(data.univ_id);
+                    $('#national_id').val(data.national_id);
+                    $('#mobile').val(data.mobile);
+
+                })
+
+            });
+
+
+            $('#action').click(function (e) {
+
+                e.preventDefault();
+
+                $(this).html('Sending..');
+
+                var product_id = $("_id").val();
+
+                $.ajax({
+
+
+                    data: $('#productForm').serialize(),
+                    url: "{{ route('students.store') }}" ,
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        if(data.status==200) {
+
+
+                            $('#action').html('إضافة');
+
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            toastr.success('تم الحفظ بنجاح');
+                            table.draw(false);
+                        }
+                        else{
+                            toastr.warning(data.success);
+                        }
+
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+
+                        $('#action').html('إضافة');
+
+                    }
+
+                });
+
+            });
+
+
+        });
+
+    </script>
 @endpush

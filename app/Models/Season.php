@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Year extends Model
+class Season extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'year_id', 'name',
+        'season_id', 'name',
     ];
+
 }

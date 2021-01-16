@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsTable extends Migration
+class CreateYearSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('year_subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('univ_id')->unique();
-            $table->string('national_id');
-            $table->string('mobile');
+            $table->integer('year_id');
+            $table->integer('subject_id');
+            $table->integer('season_id');
+            $table->integer('specialization_id')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('year_subjects');
     }
 }

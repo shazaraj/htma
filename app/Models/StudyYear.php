@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class StudyYear extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'study_year_id', 'name',
+    ];
+
 }

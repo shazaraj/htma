@@ -196,7 +196,7 @@
                 var product_id = $(this).data("id");
 
 
-                $.get("{{ route('rule.index') }}" + '/' + product_id + '/edit', function (data) {
+                $.get("{{ route('important_websites.index') }}" + '/' + product_id + '/edit', function (data) {
 
                     $('#modelheading').html("تعديل الصلاحية");
 

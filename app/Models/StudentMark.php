@@ -11,7 +11,7 @@ class StudentMark extends Model
 
     protected $fillable = [
 
-        'student-name',
+        'student_name',
         'student_id',
         'study_year_id',
         'season_id',
