@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentEco extends Model
+class InboxProblems extends Model
 {
     use HasFactory;
-    protected $table="student_ecos";
-    protected $fillable = ["title","description",];
+    protected $table="inbox_problems";
+    protected $fillable = ["problems","created_at"];
+
 }

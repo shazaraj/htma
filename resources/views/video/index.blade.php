@@ -9,7 +9,7 @@
                     <div class="card-content">
                         <div class="card-body">
                             <p>
-                                الرئيسية/ فيديوهات توضيحية
+                                الرئيسية/ ملفات توضيحية
                             </p>
                             <br>
                             <div class="row">

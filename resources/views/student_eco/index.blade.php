@@ -49,7 +49,7 @@
 
                                         <tr>
                                             <th> #</th>
-                                            <th> الموقع </th>
+                                            <th> العنوان </th>
                                             <th> الوصف </th>
                                             <th >العمليات</th>
 
@@ -87,14 +87,15 @@
                         <div class="row">
                             @csrf
 
-                        <div class="col-md-12"> <label> العنوان </label>
+                        <div class="col-md-12">
+                            <label> العنوان </label>
                             <div class="form-group">
-                                <label for="title"></label><input type="text" name="title" id="title" placeholder="" class="form-control">
+                               <input type="text" name="title" id="title" placeholder="" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12"> <label> الوصف </label>
                             <div class="form-group">
-                                <textarea type="summernote" name="description" id="description" ></textarea>
+                                <textarea type="text" name="description" id="description" ></textarea>
                             </div>
                         </div>
                         </div>
@@ -134,6 +135,7 @@
             });
 
 
+            $('#description').summernote();
             var table = $('#tableData').DataTable({
                 "language": {
                     "processing": " جاري المعالجة",
@@ -187,9 +189,11 @@
             $('body').on('click', '.editProduct', function () {
 
                 var product_id = $(this).data("id");
-
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 $.get("{{ route('student_eco.index') }}" + '/' + product_id + '/edit', function (data) {
+                    item.html("<i class='fa fa-edit'></i>");
 
                     $('#modelheading').html("تعديل الملف");
 
@@ -228,11 +232,19 @@
                         $('#action').html('إضافة');
 
 
-                        $('#productForm').trigger("reset");
-                        $('#advertModal').modal("hide");
 
-                        toastr.success('تم الحفظ بنجاح');
-                        table.draw();
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
+
+                        }
+
 
 
                     },
@@ -294,6 +306,8 @@
 
             $('body').on('click', '.deleteProduct', function () {
 
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
@@ -311,6 +325,7 @@
 
                     success: function (data) {
 
+                        item.html("<i class='fa fa-trash-o'></i>");
                         table.draw();
 
                     },

@@ -10,7 +10,46 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eaff7055-752a-46a4-bf81-ab238a307166" name="Default" comment="htma" />
+    <list default="true" id="eaff7055-752a-46a4-bf81-ab238a307166" name="Default" comment="htma">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/InboxProblemsController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/InboxProblems.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/auth.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/dimmer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/messages.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/pagination.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/passwords.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/translator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/lang/ar/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CollegeInfoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CollegeInfoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmpController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmpController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmpRuleController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmpRuleController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExamResultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExamResultController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GeneralQuestionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GeneralQuestionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GradController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GradController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ImportantSitesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ImportantSitesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LecturesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LecturesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarksController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarksController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MasterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MasterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentEcoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentEcoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VideosController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VideosController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Emp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Emp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/EmpRule.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/EmpRule.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ImportantWebsite.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ImportantWebsite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/StudentEco.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudentEco.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/admin_layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/admin_layout.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/college_info/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/college_info/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/employee/add_rule.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/employee/add_rule.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/employee/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/employee/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/general_questions/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/general_questions/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/important_websites/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/important_websites/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/inbox_problems/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/inbox_problems/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/notification/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/notification/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/student_eco/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/student_eco/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/video/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/video/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,24 +193,24 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/student_eco" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\htma\resources\views\student_eco" />
-      <recent name="C:\wamp64\www\htma\resources\views\notification" />
-      <recent name="C:\wamp64\www\htma\resources\views\college_info" />
-      <recent name="C:\wamp64\www\htma\resources\views\grad" />
-      <recent name="C:\wamp64\www\htma\resources\views\video" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\htma\resources\views\employee" />
       <recent name="C:\wamp64\www\laravel\htma\resources\views\admin" />
       <recent name="C:\wamp64\www\laravel\htma\resources\views\students" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\htma\resources\lang" />
+      <recent name="C:\wamp64\www\htma\resources\views\student_eco" />
+      <recent name="C:\wamp64\www\htma\resources\views\notification" />
+      <recent name="C:\wamp64\www\htma\resources\views\college_info" />
+      <recent name="C:\wamp64\www\htma\resources\views\grad" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -193,7 +232,8 @@
       <workItem from="1610363834610" duration="9705000" />
       <workItem from="1610561150970" duration="227000" />
       <workItem from="1610636315258" duration="11644000" />
-      <workItem from="1610722592114" duration="9413000" />
+      <workItem from="1610722592114" duration="18912000" />
+      <workItem from="1610788497128" duration="10069000" />
     </task>
     <task id="LOCAL-00001" summary="htma">
       <created>1610734213449</created>
@@ -234,10 +274,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="457" y="165" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1610213886671" />
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1610728976159">
+    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1610741767676">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1610728976159" />
+    <state x="413" y="118" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1610741767676" />
     <state x="513" y="86" key="NewPhpClassDialog" timestamp="1610366692354">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

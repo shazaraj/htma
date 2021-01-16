@@ -14,7 +14,7 @@ class CollegeInfoController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = CollageInfo::all()->get();
+            $data = CollageInfo::latest()->get();
 
             return Datatables::of($data)
 

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ImportantWebsite extends Model
 {
     use HasFactory;
+
+    protected $table="important_websites";
+    protected $fillable = ["name","type","link"];
 }

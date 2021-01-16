@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\ImportantWebsite;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class ImportantSitesController extends Controller
 {
-    //
     public function index(Request $request)
     {
         //
         if ($request->ajax()) {
 
-            $data = ImportantWebsite::all()->get();
+            $data = ImportantWebsite::latest()->get();
 
             return Datatables::of($data)
 
@@ -64,6 +64,16 @@ class ImportantSitesController extends Controller
      */
     public function store(Request $request)
     {
+        $validateErrors = Validator::make($request->all(),
+            [
+                'name' => 'required|string|min:3|max:200',
+                'type' => 'required',
+                'link' => 'required|string',
+
+            ]);
+        if ($validateErrors->fails()) {
+            return response()->json(['status' => 201, 'success' => $validateErrors->errors()->first()]);
+        }
         ImportantWebsite::updateOrCreate(['id' => $request->_id],
 
             [
@@ -74,17 +84,17 @@ class ImportantSitesController extends Controller
             ]);
 
 
-        return response()->json(['success' => ' تمت الإضافة بنجاح    .']);
+        return response()->json(['status' =>200,'success' => ' تمت الإضافة بنجاح    .']);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Emp
+     * @param  \App\Models\ImportantWebsite
      * @return \Illuminate\Http\Response
      */
-    public function show(Emp $emp)
+    public function show(ImportantWebsite $importantWebsite)
     {
         //
     }
@@ -92,7 +102,7 @@ class ImportantSitesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Emp
+     * @param  \App\Models\ImportantWebsite
      * @return \Illuminate\Http\Response
      */
     public function edit( $id)
@@ -106,7 +116,7 @@ class ImportantSitesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Emp
+     * @param  \App\Models\ImportantWebsite
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -127,7 +137,7 @@ class ImportantSitesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Emp
+     * @param  \App\Models\ImportantWebsite
      * @return \Illuminate\Http\Response
      */
 

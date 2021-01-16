@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmpRule;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class EmpRuleController extends Controller
 {
@@ -78,11 +79,21 @@ class EmpRuleController extends Controller
     //client store
     public function store(Request $request)
     {
+
+        $validateErrors = Validator::make($request->all(),
+            [
+                'rule_name' => 'required|string|min:3|max:200',
+
+            ]);
+        if ($validateErrors->fails()) {
+            return response()->json(['status' => 201, 'success' => $validateErrors->errors()->first()]);
+        }
+
         EmpRule::updateOrCreate(['id' => $request->_id],
             [
-                'name' => $request->name,
+                'rule_name' => $request->rule_name,
             ]);
-        return response()->json(['success' => ' تمت الإضافة بنجاح    .']);
+        return response()->json(['status' =>200,'success' => ' تمت الإضافة بنجاح    .']);
     }
 
     /**
@@ -122,7 +133,7 @@ class EmpRuleController extends Controller
         EmpRule::updateOrCreate(['id' => $id],
 
             [
-                'name' => $request->get("name"),
+                'rule_name' => $request->get("rule_name"),
 
             ]);
 

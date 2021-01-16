@@ -6,6 +6,7 @@ use App\Models\Emp;
 use App\Models\EmpRule;
 use Illuminate\Http\Request;
 use DataTables;
+use Validator;
 
 class EmpController extends Controller
 {
@@ -27,7 +28,7 @@ class EmpController extends Controller
 
                 ->addIndexColumn()
                 ->addColumn('rules',function($row){
-                    return EmpRule::find($row->rule)->name;
+                    return EmpRule::find($row->rule_id)->rule_name;
                 })
 
                 ->addColumn('action', function($row){
@@ -70,18 +71,29 @@ class EmpController extends Controller
      */
     public function store(Request $request)
     {
+        $validateErrors = Validator::make($request->all(),
+            [
+                'name' => 'required|string|min:3|max:200',
+                'mobile' => 'required|min:3|max:12',
+                'rule_id' => 'required',
+                'email' => 'required|string|min:3|max:200',
+
+            ]);
+        if ($validateErrors->fails()) {
+            return response()->json(['status' => 201, 'success' => $validateErrors->errors()->first()]);
+        }
         Emp::updateOrCreate(['id' => $request->_id],
 
             [
                 'name' => $request->name,
                 'mobile' => $request->mobile,
-                'rule' => $request->rule,
+                'rule_id' => $request->rule_id,
                 'email' => $request->email
 
             ]);
 
 
-        return response()->json(['success' => ' تمت الإضافة بنجاح    .']);
+        return response()->json(['status' =>200,'success' => ' تمت الإضافة بنجاح    .']);
 
     }
 
@@ -123,7 +135,7 @@ class EmpController extends Controller
             [
                 'name' => $request->get("name"),
                 'mobile' => $request->get("mobile"),
-                'rule' => $request->get("rule"),
+                'rule_id' => $request->get("rule_id"),
                 'email' => $request->get("email")
 
             ]);

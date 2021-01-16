@@ -8,13 +8,12 @@ use DataTables;
 
 class GeneralQuestionsController extends Controller
 {
-    //
     public function index(Request $request)
     {
         //
         if ($request->ajax()) {
 
-            $data = GeneralQuestion::all()->get();
+            $data = GeneralQuestion::latest()->get();
 
             return Datatables::of($data)
 

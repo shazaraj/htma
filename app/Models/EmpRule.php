@@ -9,6 +9,6 @@ class EmpRule extends Model
 {
     use HasFactory;
     protected $table="emp_rule";
-    protected $fillable = ["name",];
+    protected $fillable = ["rule_name",];
 
 }

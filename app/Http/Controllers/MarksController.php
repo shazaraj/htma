@@ -22,7 +22,7 @@ class MarksController extends Controller
         //
         if($request->ajax()) {
 
-            $data = StudentMark::all()->get();
+            $data = StudentMark::latest()->get();
 
             return Datatables::of($data)
 

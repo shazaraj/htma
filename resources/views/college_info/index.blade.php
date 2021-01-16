@@ -134,103 +134,103 @@
 @push('pageJs')
 
 
-    <script type="text/javascript">
+{{--    <script type="text/javascript">--}}
 
-        $(function () {
-
-
-            $.ajaxSetup({
-
-                headers: {
-
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-
-                }
-
-            });
+{{--        $(function () {--}}
 
 
-            var table = $('#tableData').DataTable({
-                "language": {
-                    "processing": " جاري المعالجة",
-                    "paginate": {
-                        "first": "الأولى",
-                        "last": "الأخيرة",
-                        "next": "التالية",
-                        "previous": "السابقة"
-                    },
-                    "search": "البحث :",
-                    "loadingRecords": "جاري التحميل...",
-                    "emptyTable": " لا توجد بيانات",
-                    "info": "من إظهار _START_ إلى _END_ من _TOTAL_ النتائج",
-                    "infoEmpty": "Showing 0 إلى 0 من 0 entries",
-                    "lengthMenu": "إظهار _MENU_ البيانات",
-                },
-                processing: true,
+{{--            $.ajaxSetup({--}}
 
-                serverSide: true,
+{{--                headers: {--}}
 
-                ajax: "{{ route('employees.index')}}",
+{{--                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
 
-                columns: [
+{{--                }--}}
 
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-
-                    {data: 'name', name: 'name'},
-                    {data: 'mobile', name: 'mobile'},
-                    {data: 'rule', name: 'rule'},
-                    {data: 'date', name: 'date'},
-
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-
-                ]
-
-            });
+{{--            });--}}
 
 
+{{--            var table = $('#tableData').DataTable({--}}
+{{--                "language": {--}}
+{{--                    "processing": " جاري المعالجة",--}}
+{{--                    "paginate": {--}}
+{{--                        "first": "الأولى",--}}
+{{--                        "last": "الأخيرة",--}}
+{{--                        "next": "التالية",--}}
+{{--                        "previous": "السابقة"--}}
+{{--                    },--}}
+{{--                    "search": "البحث :",--}}
+{{--                    "loadingRecords": "جاري التحميل...",--}}
+{{--                    "emptyTable": " لا توجد بيانات",--}}
+{{--                    "info": "من إظهار _START_ إلى _END_ من _TOTAL_ النتائج",--}}
+{{--                    "infoEmpty": "Showing 0 إلى 0 من 0 entries",--}}
+{{--                    "lengthMenu": "إظهار _MENU_ البيانات",--}}
+{{--                },--}}
+{{--                processing: true,--}}
 
-            $('body').on('click', '.accept', function () {
+{{--                serverSide: true,--}}
 
+{{--                ajax: "{{ route('employees.index')}}",--}}
 
-                var product_id = $(this).data("id");
+{{--                columns: [--}}
 
-                var co = confirm("  هل أنت متأكد من قبول الخبر  !");
-                if (!co) {
-                    return;
-                }
+{{--                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},--}}
 
+{{--                    {data: 'name', name: 'name'},--}}
+{{--                    {data: 'mobile', name: 'mobile'},--}}
+{{--                    {data: 'rule', name: 'rule'},--}}
+{{--                    {data: 'date', name: 'date'},--}}
 
-                $.ajax({
+{{--                    {data: 'action', name: 'action', orderable: false, searchable: false},--}}
 
-                    type: "POST",
+{{--                ]--}}
 
-                    url: "{{ route('employees.store') }}/" + product_id  ,
-                    // data:{
-                    //     "_id":product_id,
-                    //     "status":1,
-                    //     "_token":$("input[name=_token]").val()
-                    // },
-
-                    success: function (data) {
-
-                        table.draw();
-
-                    },
-
-                    error: function (data) {
-
-                        console.log('خطأ:', data);
-
-                    }
-
-                });
-
-            });
+{{--            });--}}
 
 
 
+{{--            $('body').on('click', '.accept', function () {--}}
 
-        });
 
-    </script>
+{{--                var product_id = $(this).data("id");--}}
+
+{{--                var co = confirm("  هل أنت متأكد من قبول الخبر  !");--}}
+{{--                if (!co) {--}}
+{{--                    return;--}}
+{{--                }--}}
+
+
+{{--                $.ajax({--}}
+
+{{--                    type: "POST",--}}
+
+{{--                    url: "{{ route('employees.store') }}/" + product_id  ,--}}
+{{--                    // data:{--}}
+{{--                    //     "_id":product_id,--}}
+{{--                    //     "status":1,--}}
+{{--                    //     "_token":$("input[name=_token]").val()--}}
+{{--                    // },--}}
+
+{{--                    success: function (data) {--}}
+
+{{--                        table.draw();--}}
+
+{{--                    },--}}
+
+{{--                    error: function (data) {--}}
+
+{{--                        console.log('خطأ:', data);--}}
+
+{{--                    }--}}
+
+{{--                });--}}
+
+{{--            });--}}
+
+
+
+
+{{--        });--}}
+
+{{--    </script>--}}
 @endpush

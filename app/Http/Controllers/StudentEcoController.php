@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\StudentEco;
+use Validator;
 use Illuminate\Http\Request;
 //use Yajra\DataTables\DataTables;
 use DataTables;
@@ -39,7 +40,13 @@ class StudentEcoController extends Controller
 
                 })
 
-                ->rawColumns(['action'])
+                ->addColumn('description', function($row){
+
+                    return $row->description;
+
+                })
+
+                ->rawColumns(['action','description'])
 
                 ->make(true);
 
@@ -69,16 +76,27 @@ class StudentEcoController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request->all();
+        $validateErrors = Validator::make($request->all(),
+            [
+                'title' => 'required|string|min:3|max:200',
+                'description' => 'required|string|min:250',
+
+            ]);
+        if ($validateErrors->fails()) {
+            return response()->json(['status' => 201, 'success' => $validateErrors->errors()->first()]);
+        }
+
         StudentEco::updateOrCreate(['id' => $request->_id],
 
             [
-                'title' => $request->tilte,
+
+                'title' => $request->title,
                 'description' => $request->description,
 
             ]);
 
-
-        return response()->json(['success' => ' تمت الإضافة بنجاح    .']);
+        return response()->json(['status' =>200,'success' => ' تمت الإضافة بنجاح    .']);
 
     }
 

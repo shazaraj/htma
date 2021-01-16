@@ -14,7 +14,7 @@ class LecturesController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = Lecture::all()->get();
+            $data = Lecture::latest()->get();
 
             return Datatables::of($data)
 

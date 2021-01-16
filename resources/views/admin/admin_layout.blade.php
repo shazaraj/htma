@@ -91,7 +91,7 @@
         <!-- Sidebar Header starts-->
         <div class="sidebar-header">
             <div class="logo clearfix"><a class="logo-text float-left" href="{{url('/home')}}">
-                    <span class="text">  htma </span></a><a class="nav-toggle d-none d-lg-none d-xl-block" id="sidebarToggle" href="javascript:;"><i class="toggle-icon ft-toggle-right" data-toggle="expanded"></i></a><a class="nav-close d-block d-lg-block d-xl-none" id="sidebarClose" href="javascript:;"><i class="ft-x"></i></a></div>
+                    <span class="text" dir="ltr">  htma </span></a><a class="nav-toggle d-none d-lg-none d-xl-block" id="sidebarToggle" href="javascript:;"><i class="toggle-icon ft-toggle-right" data-toggle="expanded"></i></a><a class="nav-close d-block d-lg-block d-xl-none" id="sidebarClose" href="javascript:;"><i class="ft-x"></i></a></div>
         </div>
         <!-- Sidebar Header Ends-->
         <!-- / main menu header-->
@@ -102,7 +102,7 @@
 
                     <li class=" nav-item"><a href="{{url('/notification')}}"><i class="ft ft-bell"></i><span class="menu-title" data-i18n="Email"> الإشعارات </span></a>
                     <li class=" nav-item"><a href="{{url('/inbox_problems')}}"><i class="ft ft-sunrise"></i><span class="menu-title" data-i18n="Email"> الشكاوي </span></a>
-                    <li class=" nav-item"><a href="{{url('/student_eco')}}"><i class="ft ft-sunrise"></i><span class="menu-title" data-i18n="Email"> الشؤون الطلابية </span></a>
+                    <li class=" nav-item"><a href="{{url('/student_eco')}}"><i class="ft ft-sun"></i><span class="menu-title" data-i18n="Email"> الشؤون الطلابية </span></a>
                     <li class=" nav-item"><a href="{{url('/employees')}}"><i class="ft-user"></i><span class="menu-title" data-i18n="Email"> الموظفين </span></a>
                     <li class=" nav-item"><a href="{{url('/rule')}}"><i class="ft-plus"></i><span class="menu-title" data-i18n="Email"> الصلاحيات </span></a>
 
@@ -110,8 +110,8 @@
                         <ul class="menu-content">
                             <li><a href="{{url('/lecture')}}"><i class="ft-book-open"></i><span class="menu-item" data-i18n="Grid">   محاضرات إلكترونية </span> <span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a></li>
                             <li><a href="{{url('result_exam')}}"><i class="ft ft-archive"></i><span class="menu-item" data-i18n="Typography"> سلالم امتحانية </span>  </a></li>
-                            <li><a href="{{url('important_websites')}}"><i class="fa fa-code"></i><span class="menu-item" data-i18n="Typography"> مواقع آمنة وروابط </span>  </a></li>
-                            <li><a href="{{url('/videos')}}"><i class="ft ft-video"></i><span class="menu-item" data-i18n="Typography">فيديوهات توضيحية </span>  </a></li>
+                            <li><a href="{{url('important_websites')}}"><i class="fa fa-code"></i><span class="menu-item" data-i18n="Typography"> مواقع وروابط هامة </span>  </a></li>
+                            <li><a href="{{url('/videos')}}"><i class="ft ft-file"></i><span class="menu-item" data-i18n="Typography">ملفات توضيحية </span>  </a></li>
                             <li><a  href="{{url('/general_questions')}}"><i class="fa fa-question-circle "></i><span class="menu-item" data-i18n="Typography">الأسئلة الشائعة </span>  </a></li>
 
                         </ul>
@@ -135,7 +135,7 @@
                     <li class="has-sub nav-item"><a href="javascript:;"><i class="ft ft-server"></i><span class="menu-title" data-i18n="UI Kit">  المكتبة الإلكترونية </span><span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a>
                         <ul class="menu-content">
                             <li><a href="{{url('/grad')}}"><i class="fa fa-pied-piper"></i><span class="menu-item" data-i18n="Grid"> مشاريع تخرج   </span> <span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a></li>
-                            <li><a href="{{url('/master')}}"><i class="fa fa-rupee"></i><span class="menu-item" data-i18n="Grid"> رسائل ماجستير   </span></a></li>
+                            <li><a href="{{url('/master')}}"><i class="fa fa-cc-mastercard"></i><span class="menu-item" data-i18n="Grid"> رسائل ماجستير   </span></a></li>
 
                         </ul>
                     </li>

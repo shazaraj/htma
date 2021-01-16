@@ -52,7 +52,7 @@
                                         <th> الاسم </th>
                                         <th> الموبايل </th>
                                         <th> الصلاحية </th>
-                                        <th> تاريخ البدء </th>
+                                        <th> البريد الإلكتروني </th>
                                         <th >العمليات</th>
 
                                     </tr>
@@ -101,10 +101,10 @@
                             </div>
 
                             <div class="col-md-12"> <label> الصلاحية </label>
-                                <select name="rule" id="" class="form-control">
+                                <select name="rule_id" id="rule_id" class="form-control">
                                     @if(count($rules) > 0)
                                         @foreach($rules as $rule)
-                                            <option value="{{$rule->id}}">{{$rule->name}}</option>
+                                            <option value="{{$rule->id}}">{{$rule->rule_name}}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -175,7 +175,7 @@
 
                     {data: 'name', name: 'name'},
                     {data: 'mobile', name: 'mobile'},
-                    {data: 'rule', name: 'rule'},
+                    {data: 'rules', name: 'rules'},
                     {data: 'email', name: 'email'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 
@@ -200,12 +200,13 @@
 
 
             $('body').on('click', '.editProduct', function () {
-
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
                 var product_id = $(this).data("id");
 
 
                 $.get("{{ route('employees.index') }}" + '/' + product_id + '/edit', function (data) {
-
+                    item.html("<i class='fa fa-edit'></i>");
                     $('#modelheading').html("تعديل بيانات الموظف");
 
                     $("#action").html("تعديل");
@@ -216,7 +217,7 @@
 
                     $('#name').val(data.name);
                     $('#mobile').val(data.mobile);
-                    $('#rule').val(data.rule);
+                    $('#rule_id').val(data.rule_id);
                     $('#email').val(data.email);
 
                 })
@@ -245,11 +246,17 @@
                         $('#action').html('إضافة');
 
 
-                        $('#productForm').trigger("reset");
-                        $('#advertModal').modal("hide");
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
 
-                        toastr.success('تم الحفظ بنجاح');
-                        table.draw();
+                        }
 
 
                     },
@@ -276,7 +283,7 @@
 
                     data: $('#productEditForm').serialize(),
 
-                    url: "{{ route('rule.store') }}",
+                    url: "{{ route('employees.store') }}",
 
                     type: "POST",
 
@@ -310,7 +317,8 @@
 
 
             $('body').on('click', '.deleteProduct', function () {
-
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
@@ -324,10 +332,11 @@
 
                     type: "DELETE",
 
-                    url: "{{ route('rule.store') }}" + '/' + product_id,
+                    url: "{{ route('employees.store') }}" + '/' + product_id,
 
                     success: function (data) {
 
+                        item.html("<i class='fa fa-trash-o'></i>");
                         table.draw();
 
                     },

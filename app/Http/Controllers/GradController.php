@@ -12,7 +12,7 @@ class GradController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = \CreateEmpRuleTable::all()->get();
+            $data = \CreateEmpRuleTable::get();
 
             return Datatables::of($data)
 

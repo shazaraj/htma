@@ -14,7 +14,7 @@ class ExamResultController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = ExamResult::all()->get();
+            $data = ExamResult::get();
 
             return Datatables::of($data)
 

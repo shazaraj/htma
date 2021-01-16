@@ -84,7 +84,7 @@
 
                         <div class="col-md-12"> <label> نوع الصلاحية </label>
                             <div class="form-group">
-                                <input type="text" name="name" id="name" placeholder="" class="form-control">
+                                <input type="text" name="rule_name" id="rule_name" placeholder="" class="form-control">
                             </div>
                         </div>
 
@@ -95,7 +95,7 @@
 
                         <input type="hidden" name="operation" id="operation"/>
                         <input type="reset" class="btn bg-light-secondary" data-dismiss="modal" value="إغلاق">
-                        <input type="submit" name="action" id="action" class="btn btn-primary" value="حفظ">
+                        <button type="submit" name="action" id="action" class="btn btn-primary" value="">حفظ</button>
                     </div>
                 </form>
             </div>
@@ -151,7 +151,7 @@
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
 
                     {data: 'id', name: 'id'},
-                    {data: 'name', name: 'name'},
+                    {data: 'rule_name', name: 'rule_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 
                 ]
@@ -174,12 +174,13 @@
             });
 
 
-            $('body').on('click', '.editRule', function () {
-
+            $('body').on('click', '.editProduct', function () {
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
                 var product_id = $(this).data("id");
 
-
                 $.get("{{ route('rule.index') }}" + '/' + product_id + '/edit', function (data) {
+                    item.html("<i class='fa fa-edit'></i>");
 
                     $('#modelheading').html("تعديل الصلاحية");
 
@@ -189,7 +190,7 @@
 
                     $('#_id').val(data.id);
 
-                    $('#name').val(data.name);
+                    $('#rule_name').val(data.rule_name);
 
                 })
 
@@ -200,7 +201,7 @@
 
                 e.preventDefault();
 
-                $(this).html('Sending..');
+                $('#action').html('Sending..');
 
 
                 $.ajax({
@@ -217,11 +218,17 @@
                         $('#action').html('إضافة');
 
 
-                        $('#productForm').trigger("reset");
-                        $('#advertModal').modal("hide");
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
 
-                        toastr.success('تم الحفظ بنجاح');
-                        table.draw();
+                        }
 
 
                     },
@@ -281,8 +288,10 @@
             });
 
 
-            $('body').on('click', '.deleteRule', function () {
+            $('body').on('click', '.deleteProduct', function () {
 
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
@@ -301,6 +310,8 @@
                     success: function (data) {
 
                         table.draw();
+                        item.html("<i class='fa fa-trash-o'></i>");
+
 
                     },
 

@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StudentEco;
+use App\Models\InboxProblems;
 use Illuminate\Http\Request;
 use DataTables;
 
-class StudentsController extends Controller
+class InboxProblemsController extends Controller
 {
+    //
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-
     {
         //
         if ($request->ajax()) {
 
-            $data = StudentEco::latest()->get();
+            $data = InboxProblems::latest()->get();
 
             return Datatables::of($data)
 
@@ -27,27 +27,23 @@ class StudentsController extends Controller
 
                 ->addColumn('action', function($row){
 
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"> <i class="fa fa-edit"></i> </a>';
 
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"><i class="fa fa-edit"></i></a>';
-
-
-
-                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"><i class="fa fa-trash-o"></i></a>';
-
-
+                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"> <i class="fa fa-trash-o"></i> </a>';
 
                     return $btn;
 
                 })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action','rules'])
 
                 ->make(true);
 
             return;
         }
-        return view('students.import_students');
+
+        return view("inbox_problems.index" );
+
     }
 
     /**
@@ -68,22 +64,28 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        StudentEco::updateOrCreate(['id' => $request->_id],[
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+        InboxProblems::updateOrCreate(['id' => $request->_id],
 
-        return response()->json(['success' => 'تمت الإضافة بنجاح. ']);
+            [
+                'name' => $request->name,
+                'mobile' => $request->mobile,
+                'rule_id' => $request->rule_id,
+                'email' => $request->email
+
+            ]);
+
+
+        return response()->json(['success' => ' تمت الإضافة بنجاح    .']);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\InboxProblems
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(InboxProblems $inboxProblems)
     {
         //
     }
@@ -91,13 +93,13 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\InboxProblems
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id)
     {
-        //
-        $item =StudentEco::find($id);
+        $item = InboxProblems::find($id);
+
         return response()->json($item);
     }
 
@@ -105,17 +107,18 @@ class StudentsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\InboxProblems
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        StudentEco::updateOrCreate(['id' => $id],
+        InboxProblems::updateOrCreate(['id' => $id],
 
             [
-                'title' => $request->get("title"),
-                'description' => $request->get("description"),
+                'name' => $request->get("name"),
+                'mobile' => $request->get("mobile"),
+                'rule_id' => $request->get("rule_id"),
+                'email' => $request->get("email")
 
             ]);
 
@@ -126,13 +129,14 @@ class StudentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\InboxProblems
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
-        //
-        StudentEco::find($id)->delete();
+
+        InboxProblems::find($id)->delete();
 
 
         return response()->json(['success'=>' تم الحذف بنجاح']);

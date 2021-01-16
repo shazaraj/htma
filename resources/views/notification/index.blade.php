@@ -121,3 +121,231 @@
 
 @endsection
 
+@push('pageJs')
+
+
+    <script type="text/javascript">
+
+        $(function () {
+
+
+            $.ajaxSetup({
+
+                headers: {
+
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+                }
+
+            });
+
+
+            var table = $('#tableData').DataTable({
+                "language": {
+                    "processing": " جاري المعالجة",
+                    "paginate": {
+                        "first": "الأولى",
+                        "last": "الأخيرة",
+                        "next": "التالية",
+                        "previous": "السابقة"
+                    },
+                    "search": "البحث :",
+                    "loadingRecords": "جاري التحميل...",
+                    "emptyTable": " لا توجد بيانات",
+                    "info": "من إظهار _START_ إلى _END_ من _TOTAL_ النتائج",
+                    "infoEmpty": "Showing 0 إلى 0 من 0 entries",
+                    "lengthMenu": "إظهار _MENU_ البيانات",
+                },
+                processing: true,
+
+                serverSide: true,
+
+                ajax: "{{ route('notification.index')}}",
+
+                columns: [
+
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+
+                    {data: 'notify_type', name: 'notify_type'},
+                    {data: 'image', name: 'image'},
+                    {data: 'details', name: 'details'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+
+                ]
+
+            });
+
+
+
+            $('#createNew').click(function () {
+
+                $('#action').val("إضافة");
+
+                $('#_id').val('');
+
+                $('#productForm').trigger("reset");
+
+                $('#modelHeading').html("  إضافة جديد  ");
+
+
+            });
+
+
+            $('body').on('click', '.editProduct', function () {
+
+                var product_id = $(this).data("id");
+
+
+                $.get("{{ route('notification.index') }}" + '/' + product_id + '/edit', function (data) {
+
+                    $('#modelheading').html("تعديل الإشعار");
+
+                    $("#action").html("تعديل");
+                    $("#action").val("تعديل");
+                    $('#advertModal').modal('show');
+
+                    $('#_id').val(data.id);
+
+                    $('#notify_type').val(data.notify_type);
+                    $('#image').val(data.image);
+                    $('#details').val(data.details);
+
+                })
+
+            });
+
+
+            $('#action').click(function (e) {
+
+                e.preventDefault();
+
+                $(this).html('Sending..');
+
+
+                $.ajax({
+
+                    data: $('#productForm').serialize(),
+
+                    url: "{{ route('notification.store') }}",
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        $('#action').html('إضافة');
+
+
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
+
+                        }
+
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+
+                        $('#action').html('إضافة');
+
+                    }
+
+                });
+
+            });
+            $('#submit').click(function (e) {
+
+                e.preventDefault();
+
+                $(this).html('saving..');
+
+
+                $.ajax({
+
+                    data: $('#productEditForm').serialize(),
+
+                    url: "{{ route('notification.store') }}",
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        $('#action').html('   حفظ التعديلات &nbsp; <i class="fa fa-save"></i> ');
+
+
+                        $('#productEditForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+
+                        table.draw();
+
+                        toastr.success("تم التعديل بنجاح");
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+                        $('#ajaxModel').modal('hide');
+
+                        $('#editBtn').html('Save changes &nbsp; <i class="fa fa-save"></i> ');
+
+                    }
+
+                });
+
+            });
+
+
+            $('body').on('click', '.deleteProduct', function () {
+
+
+                var product_id = $(this).data("id");
+
+                var co = confirm("  هل أنت متأكد من الحذف  !");
+                if (!co) {
+                    return;
+                }
+
+
+                $.ajax({
+
+                    type: "DELETE",
+
+                    url: "{{ route('notification.store') }}" + '/' + product_id,
+
+                    success: function (data) {
+
+                        table.draw();
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('خطأ:', data);
+
+                    }
+
+                });
+
+            });
+
+
+
+
+
+        });
+
+    </script>
+@endpush
+
+

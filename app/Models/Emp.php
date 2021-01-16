@@ -10,7 +10,7 @@ class Emp extends Model
     use HasFactory;
     protected $table="emps";
 
-    protected $fillable = ["name", "mobile","email","rule",];
+    protected $fillable = ["name", "mobile","email","rule_id",];
 //    protected $hidden=["rule"];
 
 }

@@ -49,8 +49,9 @@
 
                                         <tr>
                                             <th> #</th>
-                                            <th> الموقع </th>
-                                            <th> الوصف </th>
+                                            <th> اسم الموقع/ المجموعة </th>
+                                            <th> النوع </th>
+                                            <th> الرابط </th>
                                             <th >العمليات</th>
 
                                         </tr>
@@ -87,19 +88,19 @@
                         <div class="row">
                             @csrf
 
-                        <div class="col-md-6"> <label> اسم الموقع/ المجموعة </label>
+                        <div class="col-md-12"> <label> اسم الموقع/ المجموعة </label>
                             <div class="form-group">
                                 <input type="text" name="name" id="name" placeholder="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6"> <label> النوع </label>
+                        <div class="col-md-12"> <label> النوع </label>
                             <div class="form-group">
-                                <input type="number" name="type" id="type" placeholder="" class="form-control">
+                                <input type="text" name="type" id="type" placeholder="" class="form-control">
                             </div>
                         </div>
-                            <div class="col-md-6"> <label> الرابط </label>
+                            <div class="col-md-12"> <label> الرابط </label>
                                 <div class="form-group">
-                                    <input type="number" name="link" id="link" placeholder="" class="form-control">
+                                    <input type="text" name="link" id="link" placeholder="" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -195,9 +196,9 @@
                 var product_id = $(this).data("id");
 
 
-                $.get("{{ route('important_websites.index') }}" + '/' + product_id + '/edit', function (data) {
+                $.get("{{ route('rule.index') }}" + '/' + product_id + '/edit', function (data) {
 
-                    $('#modelheading').html("تعديل الروابط");
+                    $('#modelheading').html("تعديل الصلاحية");
 
                     $("#action").html("تعديل");
                     $("#action").val("تعديل");
@@ -235,12 +236,17 @@
                         $('#action').html('إضافة');
 
 
-                        $('#productForm').trigger("reset");
-                        $('#advertModal').modal("hide");
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
 
-                        toastr.success('تم الحفظ بنجاح');
-                        table.draw();
-
+                        }
 
                     },
 
@@ -339,4 +345,5 @@
         });
 
     </script>
+
 @endpush

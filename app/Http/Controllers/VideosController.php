@@ -13,7 +13,7 @@ class VideosController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = VideosController::all()->get();
+            $data = VideosController::latest()->get();
 
             return Datatables::of($data)
 

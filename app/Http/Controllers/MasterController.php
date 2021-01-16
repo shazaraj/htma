@@ -13,7 +13,7 @@ class MasterController extends Controller
         //
         if ($request->ajax()) {
 
-            $data = MasterController::all()->get();
+            $data = MasterController::latest()->get();
 
             return Datatables::of($data)
 
