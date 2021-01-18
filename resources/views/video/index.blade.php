@@ -50,9 +50,9 @@
                                         <tr>
                                             <th> #</th>
                                             <th> الاسم </th>
-                                            <th> الموبايل </th>
-                                            <th> الصلاحية </th>
-                                            <th> تاريخ البدء </th>
+                                            <th> النوع </th>
+                                            <th> الملف </th>
+                                            <th> التاريخ </th>
                                             <th >العمليات</th>
 
                                         </tr>
@@ -76,7 +76,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <label class="modal-title text-text-bold-600" id="modelheading"> إضافة موظف جديد  </label>
+                    <label class="modal-title text-text-bold-600" id="modelheading"> إضافة ملف جديد  </label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
 
@@ -94,21 +94,21 @@
                                 <input type="text" name="name" id="name" placeholder="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6"> <label> الموبايل </label>
+                        <div class="col-md-6"> <label> النوع </label>
                             <div class="form-group">
-                                <input type="number" name="mobile" id="mobile" placeholder="" class="form-control">
+                                <input type="text" name="type" id="type" placeholder="" class="form-control">
                             </div>
                         </div>
 
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6"> <label> الصلاحية </label>
+                        <div class="col-md-6"> <label> الملف </label>
                             <div class="form-group">
-                                <input type="number" name="rule" id="rule" placeholder="" class="form-control">
+                                <input type="file" name="file" id="file" placeholder="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6"> <label>  تاريخ البدء </label>
+                        <div class="col-md-6"> <label>  التاريخ  </label>
                             <div class="form-group">
                                 <input type="date" name="date" id="date" placeholder="" class="form-control">
                             </div>
@@ -170,15 +170,15 @@
 
                 serverSide: true,
 
-                ajax: "{{ route('employees.index')}}",
+                ajax: "{{ route('videos.index')}}",
 
                 columns: [
 
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
 
                     {data: 'name', name: 'name'},
-                    {data: 'mobile', name: 'mobile'},
-                    {data: 'rule', name: 'rule'},
+                    {data: 'type', name: 'type'},
+                    {data: 'file', name: 'file'},
                     {data: 'date', name: 'date'},
 
                     {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -188,13 +188,147 @@
             });
 
 
+            $('#createNew').click(function () {
 
-            $('body').on('click', '.accept', function () {
+                $('#action').val("إضافة");
 
+                $('#_id').val('');
+
+                $('#productForm').trigger("reset");
+
+                $('#modelHeading').html("  إضافة جديد  ");
+
+
+            });
+
+
+            $('body').on('click', '.editProduct', function () {
+
+                var product_id = $(this).data("id");
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
+
+                $.get("{{ route('videos.index') }}" + '/' + product_id + '/edit', function (data) {
+                    item.html("<i class='fa fa-edit'></i>");
+
+                    $('#modelheading').html("تعديل الملف");
+
+                    $("#action").html("تعديل");
+                    $("#action").val("تعديل");
+                    $('#advertModal').modal('show');
+
+                    $('#_id').val(data.id);
+
+                    $('#title').val(data.title);
+                    $('#description').val(data.description);
+
+                })
+
+            });
+
+
+            $('#action').click(function (e) {
+
+                e.preventDefault();
+
+                $(this).html('Sending..');
+
+
+                $.ajax({
+
+                    data: $('#productForm').serialize(),
+
+                    url: "{{ route('videos.store') }}",
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        $('#action').html('إضافة');
+
+
+
+                        if(data.status == 200){
+                            toastr.success('تم الحفظ بنجاح');
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            table.draw();
+                        }
+                        else {
+                            toastr.warning(data.success);
+
+                        }
+
+
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+
+                        $('#action').html('إضافة');
+
+                    }
+
+                });
+
+            });
+            $('#submit').click(function (e) {
+
+                e.preventDefault();
+
+                $(this).html('saving..');
+
+
+                $.ajax({
+
+                    data: $('#productEditForm').serialize(),
+
+                    url: "{{ route('videos.store') }}",
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        $('#action').html('   حفظ التعديلات &nbsp; <i class="fa fa-save"></i> ');
+
+
+                        $('#productEditForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+
+                        table.draw();
+
+                        toastr.success("تم التعديل بنجاح");
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+                        $('#ajaxModel').modal('hide');
+                        $(".modal-backdrop").hide();
+
+                        $('#editBtn').html('Save changes &nbsp; <i class="fa fa-save"></i> ');
+
+                    }
+
+                });
+
+            });
+
+
+            $('body').on('click', '.deleteProduct', function () {
+
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
-                var co = confirm("  هل أنت متأكد من قبول الخبر  !");
+                var co = confirm("  هل أنت متأكد من الحذف  !");
                 if (!co) {
                     return;
                 }
@@ -202,17 +336,13 @@
 
                 $.ajax({
 
-                    type: "POST",
+                    type: "DELETE",
 
-                    url: "{{ route('employees.store') }}/" + product_id  ,
-                    // data:{
-                    //     "_id":product_id,
-                    //     "status":1,
-                    //     "_token":$("input[name=_token]").val()
-                    // },
+                    url: "{{ route('videos.store') }}" + '/' + product_id,
 
                     success: function (data) {
 
+                        item.html("<i class='fa fa-trash-o'></i>");
                         table.draw();
 
                     },
@@ -226,7 +356,6 @@
                 });
 
             });
-
 
 
 

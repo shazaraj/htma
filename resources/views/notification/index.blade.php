@@ -89,13 +89,16 @@
                             @csrf
 
                         <div class="col-md-12"> <label> النوع </label>
-                            <div class="form-group">
-                                <input type="text" name="notify_type" id="notify_type" placeholder="" class="form-control">
-                            </div>
+                            <select name="notify_type" id="notify_type" class="form-control">
+                                @if(count($rules) > 0)
+                                    @foreach($rules as $rule)
+                                        <option value="{{$rule->id}}">{{$rule->rule_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
-                            <div class="col-md-12"> <label> الصورة </label>
-
-                                    <input type="file" name="image" id="image" class="form-control">
+                            <div class="col-md-12"><label for="roundText">   صورة     </label>
+                                <input type="file" name="image" id="image" class="form-control"/>
 
                             </div>
                             <div class="col-md-12"> <label> التفاصيل </label>
@@ -166,7 +169,7 @@
 
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
 
-                    {data: 'notify_type', name: 'notify_type'},
+                    {data: 'rules', name: 'rules'},
                     {data: 'image', name: 'image'},
                     {data: 'details', name: 'details'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -234,19 +237,19 @@
 
                     success: function (data) {
                         $('#action').html('إضافة');
+                        toastr.success('تم الحفظ بنجاح');
+                        $('#productForm').trigger("reset");
+                        $('#advertModal').modal("hide");
+                        $(".modal-backdrop").hide();
+                        table.draw();
 
-
-                        if(data.status == 200){
-                            toastr.success('تم الحفظ بنجاح');
-                            $('#productForm').trigger("reset");
-                            $('#advertModal').modal("hide");
-                            $(".modal-backdrop").hide();
-                            table.draw();
-                        }
-                        else {
-                            toastr.warning(data.success);
-
-                        }
+                        // if(data.status == 200){
+                        //
+                        // }
+                        // else {
+                        //     toastr.warning(data.success);
+                        //
+                        // }
 
 
                     },

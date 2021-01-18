@@ -50,6 +50,7 @@
                                             <th> #</th>
                                             <th> نص الشكوى </th>
                                             <th> التاريخ </th>
+                                            <th> حالة الشكوى </th>
                                             <th >العمليات</th>
 
                                         </tr>
@@ -120,6 +121,7 @@
 
                     {data: 'problems', name: 'problems'},
                     {data: 'created_at', name: 'created_at'},
+                    {data: 'check', name: 'check'},
 
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 
@@ -129,135 +131,24 @@
 
 
 
-            $('#createNew').click(function () {
+            $('body').on('click', '.checkProduct', function () {
 
-                $('#action').val("إضافة");
-
-                $('#_id').val('');
-
-                $('#productForm').trigger("reset");
-
-                $('#modelHeading').html("  إضافة جديد  ");
-
-
-            });
-
-
-            $('body').on('click', '.editProduct', function () {
-
-                var product_id = $(this).data("id"); var item=$(this);
+                var item=$(this);
                 item.html("<i class='fa fa-spinner'></i>");
 
+                var product_id = $(this).data("id");
 
-
-                $.get("{{ route('inbox_problems.index') }}" + '/' + product_id + '/edit', function (data) {
-                    item.html("<i class='fa fa-edit'></i>");
-
-                    $('#modelheading').html("تعديل الصلاحية");
-
-                    $("#action").html("تعديل");
-                    $("#action").val("تعديل");
-                    $('#advertModal').modal('show');
+                $.get("{{ route('inbox_problems.store') }}" + '/' + product_id + '/edit', function (data) {
 
                     $('#_id').val(data.id);
-
-                    $('#problems').val(data.problems);
-                    $('#created_at').val(data.created_at);
+                    table.draw();
+                    item.html("<i class='fa fa-success'></i>");
 
                 })
 
             });
 
 
-            $('#action').click(function (e) {
-
-                e.preventDefault();
-
-                $(this).html('Sending..');
-
-
-                $.ajax({
-
-                    data: $('#productForm').serialize(),
-
-                    url: "{{ route('inbox_problems.store') }}",
-
-                    type: "POST",
-
-                    dataType: 'json',
-
-                    success: function (data) {
-                        $('#action').html('إضافة');
-
-
-                        if(data.status == 200){
-                            toastr.success('تم الحفظ بنجاح');
-                            $('#productForm').trigger("reset");
-                            $('#advertModal').modal("hide");
-                            $(".modal-backdrop").hide();
-                            table.draw();
-                        }
-                        else {
-                            toastr.warning(data.success);
-
-                        }
-
-
-                    },
-
-                    error: function (data) {
-
-                        console.log('Error:', data);
-
-                        $('#action').html('إضافة');
-
-                    }
-
-                });
-
-            });
-            $('#submit').click(function (e) {
-
-                e.preventDefault();
-
-                $(this).html('saving..');
-
-
-                $.ajax({
-
-                    data: $('#productEditForm').serialize(),
-
-                    url: "{{ route('inbox_problems.store') }}",
-
-                    type: "POST",
-
-                    dataType: 'json',
-
-                    success: function (data) {
-                        $('#action').html('   حفظ التعديلات &nbsp; <i class="fa fa-save"></i> ');
-
-
-                        $('#productEditForm').trigger("reset");
-                        $('#ajaxModel').modal('hide');
-
-                        table.draw();
-
-                        toastr.success("تم التعديل بنجاح");
-
-                    },
-
-                    error: function (data) {
-
-                        console.log('Error:', data);
-                        $('#ajaxModel').modal('hide');
-
-                        $('#editBtn').html('Save changes &nbsp; <i class="fa fa-save"></i> ');
-
-                    }
-
-                });
-
-            });
 
 
             $('body').on('click', '.deleteProduct', function () {

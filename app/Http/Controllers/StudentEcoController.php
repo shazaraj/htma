@@ -80,7 +80,7 @@ class StudentEcoController extends Controller
         $validateErrors = Validator::make($request->all(),
             [
                 'title' => 'required|string|min:3|max:200',
-                'description' => 'required|string|min:250',
+                'description' => 'required|string|min:40',
 
             ]);
         if ($validateErrors->fails()) {

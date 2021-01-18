@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmpRule;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use DataTables;
@@ -25,6 +26,13 @@ class NotificationController extends Controller
 
                 ->addIndexColumn()
 
+                ->addColumn('rules',function($row){
+                    return EmpRule::find($row->rule_id)->rule_name;
+                })
+                ->addColumn('image',function ($row) {
+                    return "<img src='".url('public/storage')."/".$row->image."'  width='100' height='100'> ";
+                })
+
                 ->addColumn('action', function($row){
 
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"> <i class="fa fa-edit"></i> </a>';
@@ -35,14 +43,16 @@ class NotificationController extends Controller
 
                 })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action','rules','image'])
 
                 ->make(true);
 
             return;
         }
 
-        return view("notification.index" );
+        $rules = EmpRule::all();
+
+        return view("notification.index" ,compact('rules'));
 
     }
 
@@ -64,6 +74,13 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
+        $validateErrors = Validator::make($request->all(),
+            [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($validateErrors->fails()) {
+            return response()->json(['status' => 201, 'success' => $validateErrors->errors()->first()]);
+        } // end if fails .
         Notification::updateOrCreate(['id' => $request->_id],
 
             [

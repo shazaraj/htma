@@ -127,7 +127,7 @@
                     <li class="has-sub nav-item"><a href="javascript:;"><i class="ft-users"></i><span class="menu-title" data-i18n="UI Kit">  شؤون الطلاب </span><span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a>
                         <ul class="menu-content">
                             <li><a href="{{url('/students')}}"><i class="fa fa-list-alt"></i><span class="menu-item" data-i18n="Grid"> قوائم الطلاب   </span> <span class="tag badge badge-pill badge-danger float-right mr-1 mt-1"></span></a></li>
-                            <li><a href="{{url('/college_info')}}"><i class="fa fa-info-circle"></i><span class="menu-item" data-i18n="Typography"> قرارات الجامعة </span>  </a></li>
+{{--                            <li><a href="{{url('/college_info')}}"><i class="fa fa-info-circle"></i><span class="menu-item" data-i18n="Typography"> قرارات الجامعة </span>  </a></li>--}}
 
                         </ul>
                     </li>

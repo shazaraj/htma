@@ -229,7 +229,7 @@
 
                 e.preventDefault();
 
-                $(this).html('Sending..');
+                $('#action').html('Sending..');
 
 
                 $.ajax({

@@ -9,6 +9,9 @@ class InboxProblems extends Model
 {
     use HasFactory;
     protected $table="inbox_problems";
-    protected $fillable = ["problems","created_at"];
+    protected $fillable = ["problems","created_at","status"];
+    protected $casts =[
+        'created_at' =>'date',
+    ];
 
 }

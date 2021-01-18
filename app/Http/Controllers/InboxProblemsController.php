@@ -25,22 +25,34 @@ class InboxProblemsController extends Controller
 
                 ->addIndexColumn()
 
+                ->addcolumn('check', function (){
+                    $state = InboxProblems::get();
+                    if($state->status == 0){
+                       return $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="0" data-original-title="Check" class="btn btn-danger btn-sm checkProduct"> <i class="fa fa-spinner">بانتظار المعالجة</i> </a>';
+                    }
+                    elseif ($state->status == 1){
+                       return $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="1" data-original-title="Check" class="btn btn-success btn-sm checkProduct"> <i class="fa fa-check-square">تمت المعالجة</i> </a>';
+                    }
+                })
                 ->addColumn('action', function($row){
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"> <i class="fa fa-edit"></i> </a>';
+//                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct"> <i class="fa fa-edit"></i> </a>';
 
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"> <i class="fa fa-trash-o"></i> </a>';
+                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"> <i class="fa fa-trash-o"></i> </a>';
+
 
                     return $btn;
 
                 })
 
-                ->rawColumns(['action','rules'])
+                ->rawColumns(['action','check'])
 
                 ->make(true);
 
             return;
         }
+
+
 
         return view("inbox_problems.index" );
 

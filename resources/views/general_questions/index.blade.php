@@ -184,11 +184,12 @@
 
 
             $('body').on('click', '.editProduct', function () {
-
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
                 var product_id = $(this).data("id");
 
-
-                $.get("{{ route('rule.index') }}" + '/' + product_id + '/edit', function (data) {
+                $.get("{{ route('general_questions.index') }}" + '/' + product_id + '/edit', function (data) {
+                    item.html("<i class='fa fa-edit'></i>");
 
                     $('#modelheading').html("تعديل الصلاحية");
 
@@ -210,7 +211,7 @@
 
                 e.preventDefault();
 
-                $(this).html('Sending..');
+                $('#action').html('Sending..');
 
 
                 $.ajax({
@@ -227,7 +228,6 @@
                         $('#action').html('إضافة');
 
 
-
                         if(data.status == 200){
                             toastr.success('تم الحفظ بنجاح');
                             $('#productForm').trigger("reset");
@@ -239,6 +239,7 @@
                             toastr.warning(data.success);
 
                         }
+
 
                     },
 
@@ -299,6 +300,8 @@
 
             $('body').on('click', '.deleteProduct', function () {
 
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
@@ -317,12 +320,17 @@
                     success: function (data) {
 
                         table.draw();
+                        item.html("<i class='fa fa-trash-o'></i>");
+                        toastr.success("تم الحذف بنجاح");
+
 
                     },
 
                     error: function (data) {
 
                         console.log('خطأ:', data);
+                        item.html("<i class='fa fa-trash-o'></i>");
+                        toastr.success("حدث خطأ ما");
 
                     }
 

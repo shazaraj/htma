@@ -83,7 +83,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <label class="modal-title text-text-bold-600" id="modelheading">تعديل بيانات  </label>
+                    <label class="modal-title text-text-bold-600" id="modelheading">اضافة جديد </label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
 

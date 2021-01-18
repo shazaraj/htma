@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExamResult extends Model
+class Video extends Model
 {
     use HasFactory;
-    protected $table="exam_results";
-
+    protected $table="video";
     protected $fillable = ["name","file","date"];
 //    protected $casts =[
 //        'created_at' =>'date',
 //    ];
-
 
 }

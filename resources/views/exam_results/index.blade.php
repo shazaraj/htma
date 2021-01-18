@@ -49,10 +49,10 @@
 
                                         <tr>
                                             <th> #</th>
-                                            <th> الاسم </th>
-                                            <th> الموبايل </th>
+                                            <th> اسم المادة </th>
+                                            <th> الملف </th>
                                             <th> الصلاحية </th>
-                                            <th> تاريخ البدء </th>
+                                            <th> التاريخ </th>
                                             <th >العمليات</th>
 
                                         </tr>
@@ -76,7 +76,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <label class="modal-title text-text-bold-600" id="modelheading"> إضافة موظف جديد  </label>
+                    <label class="modal-title text-text-bold-600" id="modelheading"> إضافة ملف جديد  </label>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
 
@@ -89,30 +89,21 @@
                         <div class="row">
                             @csrf
 
-                        <div class="col-md-6"> <label> الاسم </label>
+                        <div class="col-md-12"> <label> اسم المادة </label>
                             <div class="form-group">
                                 <input type="text" name="name" id="name" placeholder="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6"> <label> الموبايل </label>
+                        <div class="col-md-12"> <label> الملف </label>
                             <div class="form-group">
-                                <input type="number" name="mobile" id="mobile" placeholder="" class="form-control">
+                                <input type="file" name="file" id="file" placeholder="" class="form-control">
                             </div>
                         </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6"> <label> الصلاحية </label>
-                            <div class="form-group">
-                                <input type="number" name="rule" id="rule" placeholder="" class="form-control">
+                            <div class="col-md-12"> <label> التاريخ </label>
+                                <div class="form-group">
+                                    <input type="date" name="date" id="date" placeholder="" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6"> <label>  تاريخ البدء </label>
-                            <div class="form-group">
-                                <input type="date" name="date" id="date" placeholder="" class="form-control">
-                            </div>
-                        </div>
 
                     </div>
 
@@ -166,19 +157,20 @@
                     "infoEmpty": "Showing 0 إلى 0 من 0 entries",
                     "lengthMenu": "إظهار _MENU_ البيانات",
                 },
+                destroy:true,
                 processing: true,
 
                 serverSide: true,
+                stateSave:true,
 
-                ajax: "{{ route('employees.index')}}",
+                ajax: "{{ route('result_exam.index')}}",
 
                 columns: [
 
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
 
                     {data: 'name', name: 'name'},
-                    {data: 'mobile', name: 'mobile'},
-                    {data: 'rule', name: 'rule'},
+                    {data: 'file', name: 'file'},
                     {data: 'date', name: 'date'},
 
                     {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -189,12 +181,104 @@
 
 
 
-            $('body').on('click', '.accept', function () {
+            $('#createNew').click(function () {
 
+                $('#action').val("إضافة");
+
+                $('#_id').val('');
+
+                $('#productForm').trigger("reset");
+
+                $('#modelheading').html("  إضافة بيانات ");
+
+
+            });
+
+
+
+
+            $('body').on('click', '.editProduct', function () {
+
+                var item = $(this);
+                var product_id = $(this).data('id');
+                item.html("<i class='fa fa-spinner'> </i>");
+
+                $.get("{{ route('result_exam.index') }}" + '/' + product_id + '/edit', function (data) {
+
+                    item.html("<i class='fa fa-edit'> </i>");
+                    $('#modelheading').html("تعديل البيانات ");
+
+                    $("#action").html("تعديل");
+                    $("#action").val("تعديل");
+                    $('#advertModal').modal('show');
+
+                    $('#_id').val(data.id);
+
+                    $('#name').val(data.name);
+                    $('#file').val(data.file);
+                    $('#date').val(data.date);
+
+                })
+
+            });
+
+
+            $('#action').click(function (e) {
+
+                e.preventDefault();
+
+                $('#action').html('Sending..');
+
+                var product_id = $("_id").val();
+
+                $.ajax({
+
+
+                    data: $('#productForm').serialize(),
+                    url: "{{ route('result_exam.store') }}" ,
+
+                    type: "POST",
+
+                    dataType: 'json',
+
+                    success: function (data) {
+                        if(data.status==200) {
+
+
+                            $('#action').html('إضافة');
+
+                            $('#productForm').trigger("reset");
+                            $('#advertModal').modal("hide");
+                            $(".modal-backdrop").hide();
+                            toastr.success('تم الحفظ بنجاح');
+                            table.draw(false);
+                        }
+                        else{
+                            toastr.warning(data.success);
+                        }
+
+
+                    },
+
+                    error: function (data) {
+
+                        console.log('Error:', data);
+
+                        $('#action').html('إضافة');
+
+                    }
+
+                });
+
+            });
+            $('body').on('click', '.deleteProduct', function () {
+
+                var item=$(this);
+                item.html("<i class='fa fa-spinner'></i>");
 
                 var product_id = $(this).data("id");
 
-                var co = confirm("  هل أنت متأكد من قبول الخبر  !");
+                var co = confirm("  هل أنت متأكد من الحذف  !");
                 if (!co) {
                     return;
                 }
@@ -202,23 +286,21 @@
 
                 $.ajax({
 
-                    type: "POST",
+                    type: "DELETE",
 
-                    url: "{{ route('employees.store') }}/" + product_id  ,
-                    // data:{
-                    //     "_id":product_id,
-                    //     "status":1,
-                    //     "_token":$("input[name=_token]").val()
-                    // },
+                    url: "{{ route('result_exam.store') }}" + '/' + product_id,
 
                     success: function (data) {
 
+                        item.html("<i class='fa fa-trash-o'></i>");
+                        toastr.error("تم الحذف بنجاح");
                         table.draw();
 
                     },
 
                     error: function (data) {
-
+                        item.html("<i class='fa fa-trash'> </i>");
+                        toastr.error("حدث خطأ ");
                         console.log('خطأ:', data);
 
                     }
@@ -226,8 +308,6 @@
                 });
 
             });
-
-
 
 
         });

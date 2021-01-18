@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use DataTables;
+//use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Imports\StudentImport;
 use Excel;
